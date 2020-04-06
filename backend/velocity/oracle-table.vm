@@ -1,0 +1,4 @@
+SELECT 'MD' tabschema,table_name tabname FROM USER_TABLES 
+where 1=1  
+#if($tabname) and table_name like '$tabname%' #end
+and rownum < 11

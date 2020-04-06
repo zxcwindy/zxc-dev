@@ -1,0 +1,1 @@
+SELECT name from sqlite_master WHERE type='table'

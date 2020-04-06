@@ -66,4 +66,4 @@
 ** 扩展数据库支持
    1. 在安装路径的backend/jdbclib中放入对应数据类型的jdbcjar包
    2. 在backend/velocity中添加对应的vm模板，可以参考mysql相关vm模板，其中head模板是必须的。
-   3. 在backend/application.properties中的databaseReg中增加对应数据库的正则表单式
+   3. 在backend/application.properties中的databaseReg中增加对应数据库的正则表达式，默认值是".*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*"

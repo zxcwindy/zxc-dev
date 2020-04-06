@@ -1,0 +1,1 @@
+SELECT lower('md')||'.'||lower(table_name) FROM user_tables

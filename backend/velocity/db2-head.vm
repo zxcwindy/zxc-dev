@@ -1,0 +1,1 @@
+select * from ( $querySql) fetch first 100 rows only

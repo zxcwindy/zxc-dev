@@ -1,0 +1,1 @@
+select lcase(trim(tabschema))||'.'||lcase(tabname) from SYSCAT.TABLES with ur

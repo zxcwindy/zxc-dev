@@ -1,0 +1,2 @@
+select * from ( select a.*,rownum row_num from ( $querySql )  a) 
+where row_num > 0 and row_num <= 100

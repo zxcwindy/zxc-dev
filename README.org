@@ -68,4 +68,4 @@
 ** Extended database support
    1. Put the corresponding database type JDBC jar package in the backend/jdbc of the installation path
    2. To add velocity template in backend/velocity, you can refer to MySQL template .Head template is required.
-   3. Add the regular form type of corresponding database in databasereg in backend/application.properties,default value is .*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*
+   3. Add the regular form type of corresponding database in databaseReg in backend/application.properties,default value is .*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*

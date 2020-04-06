@@ -1,0 +1,1 @@
+SELECT concat(lower(table_schema),'.',lower(table_name)) FROM information_schema.tables

@@ -1,0 +1,1 @@
+select schemaname||'.'||tablename from nc_user_schemas a ,nc_user_tables b where a.schemaid=b.schemaid

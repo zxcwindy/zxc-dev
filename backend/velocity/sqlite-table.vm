@@ -1,0 +1,5 @@
+SELECT table_schema tabschema,table_name tabname FROM information_schema.tables 
+where 1=1 
+#if($tabschema) and table_schema = '$tabschema' #end  
+#if($tabname) and table_name like '$tabname%' #end
+limit 10

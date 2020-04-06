@@ -1,0 +1,5 @@
+select schemaname||'.'||tablename from nc_user_schemas a ,nc_user_tables b where a.schemaid=b.schemaid
+where 1=1
+#if($tabschema) and schemaname = '$tabschema' #end
+#if($tabname) and tablename like '$tabname%' #end
+limit 10

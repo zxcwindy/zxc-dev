@@ -1,0 +1,5 @@
+select trim(tabschema) tabschema,tabname from SYSCAT.TABLES 
+where 1=1 
+#if($tabschema) and tabschema = '$tabschema' #end
+#if($tabname) and tabname like '$tabname%'#end   
+fetch first 10 rows only 
