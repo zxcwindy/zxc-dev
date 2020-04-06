@@ -1,18 +1,18 @@
 * zxc-db
   Emacs Sql客户端，采用springboot和jdbc做为后端服务进行查询
 * 安装需求
-  jdk1.8+
-  emacs 26.1+
+  - jdk1.8+
+  - emacs 26.1+
 * 支持以下数据库
-  Oracle
-  MS SQL Server
-  PostgreSQL
-  MySQL
-  Informix
-  H2
-  SQLite
-  DB2
-  ... 以及其他支持jdbc的数据库
+  - Oracle
+  - MS SQL Server
+  - PostgreSQL
+  - MySQL
+  - Informix
+  - H2
+  - SQLite
+  - DB2
+  - ... 以及其他支持jdbc的数据库
 * 安装
   首先，将MELPA添加到你的package-archives
   然后可以通过以下方式安装zxc-db:
@@ -50,15 +50,15 @@
    配置中的jdbc-{num}，num不能重复。
    添加新的数据库配置后需要重启backend的springboot进程
 ** sql客户端使用
-   默认zxc minor mode 会在sql mode和shell mode下开启，通过C-; C-; 可以在任何模式下开启zxc minor mode。
-   当zxc minor mode开启时，可以执行以下命令
-   "C-; aa" 设置当前buffer对应的后端数据库，别名要和database.properties中的别名保持一致，如设置为abc或者oracleXe，你会看到lighter中显示Zxc[abc]
-   "C-; cs" 获取选中表名的包含所有字段的查询语句
+   - 默认zxc minor mode 会在sql mode和shell mode下开启，通过C-; C-; 可以在任何模式下开启zxc minor mode。
+   - 当zxc minor mode开启时，可以执行以下命令
+   - "C-; aa" 设置当前buffer对应的后端数据库，别名要和database.properties中的别名保持一致，如设置为abc或者oracleXe，你会看到lighter中显示Zxc[abc]
+   - "C-; cs" 获取选中表名的包含所有字段的查询语句
 
-   "C-; de" 发送当前段落或者选中区域的dml语句执行
-   "C-; ds" 发送当前段落或者选中区域的查询语句执行
-   "C-; dt" 获取选中表名的建表语句
-   "C-; ac" 启动表名自动补全，需要在backend/interval.properties中配置，格式 {alias}-interval=20,20代表20秒更新一次表名的缓存信息
+   - "C-; de" 发送当前段落或者选中区域的dml语句执行
+   - "C-; ds" 发送当前段落或者选中区域的查询语句执行
+   - "C-; dt" 获取选中表名的建表语句
+   - "C-; ac" 启动表名自动补全，需要在backend/interval.properties中配置，格式 {alias}-interval=20,20代表20秒更新一次表名的缓存信息
 
    [[file:screenshot/screen1.png][file:screenshot/screen1.png]]
 
