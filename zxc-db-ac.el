@@ -19,6 +19,7 @@
 
 ;;; Commentary:
 
+(require 'auto-complete)
 (require 'deferred)
 
 (defvar zxc-db-ac-tablename-url "%s/service/rest/dbMeta/%s/%s" "host,alias,tablename service url")
