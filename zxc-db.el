@@ -21,8 +21,11 @@
 
 ;;
 
+(require 'url)
+(require 'json)
 (require 'ctable)
 (require 'zxc-db-ac)
+(require 'deferred)
 
 (make-variable-buffer-local
  (defvar zxc-db-host "http://localhost:9990"
@@ -162,5 +165,17 @@ and response headers, object is an text."
   "get query sql statement"
   (interactive)
   (zxc-db-get-data "getSelectSql"))
+
+(defun zxc-util-get-region-or-paragraph-string ()
+  "Get the text content of the current selected area or current paragraph"
+  (if (region-active-p)
+      (buffer-substring-no-properties (region-beginning) (region-end))
+    (let ((start (save-excursion
+		   (backward-paragraph)
+		   (point)))
+	  (end (save-excursion
+		 (forward-paragraph)
+		 (point))))
+      (buffer-substring-no-properties start end))))
 
 (provide 'zxc-db)

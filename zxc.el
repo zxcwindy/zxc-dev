@@ -31,6 +31,7 @@
   "Minor mode for Zxc"
   :lighter (" " zxc-mode-lighter))
 
+(global-set-key (kbd "C-; C-;") 'zxc-mode)
 (define-key zxc-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
 (define-key zxc-mode-map (kbd  "C-; cq") #'zxc-util-convert-table-to-sql)
 (define-key zxc-mode-map (kbd  "C-; de") #'zxc-db-send-region-exec)
