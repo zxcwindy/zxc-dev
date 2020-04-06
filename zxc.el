@@ -1,8 +1,10 @@
 ;; zxc.el --- my util tools collection
 
 ;; Author: zhengxc <zh_xi_ch@126.com>
-;; Keywords: zxc dev mode
+;; Keywords: sql client
 ;; version: 1.0.0
+;; URL: https://github.com/zxcwindy/zxc-db
+;; Package-Requires: ((ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -16,6 +18,22 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;; Emacs SQL client, using springboot and JDBC as back-end services.
+;; Init:
+;; (require 'zxc)
+;; (zxc-backend-init)
+
+;; Usage:
+
+ ;; "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[ABC] is displayed in the lighter
+ ;; "C-; cs" Gets the query statement containing all fields for the selected table name
+ ;; "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
+ ;; "C-; ds" Send the query statement of the current paragraph or selected area to execute
+ ;; "C-; dt" Get the table creation statement of the selected table name
+ ;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
 
 (require 'zxc-db)
 
