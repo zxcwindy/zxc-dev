@@ -1,0 +1,69 @@
+* zxc-db
+  Emacs Sql客户端，采用springboot和jdbc做为后端服务进行查询
+* 安装需求
+  jdk1.8+
+  emacs 26.1+
+* 支持以下数据库
+  Oracle
+  MS SQL Server
+  PostgreSQL
+  MySQL
+  Informix
+  H2
+  SQLite
+  DB2
+  ... 以及其他支持jdbc的数据库
+* 安装
+  首先，将MELPA添加到你的package-archives
+  然后可以通过以下方式安装zxc-db:
+  #+BEGIN_SRC
+  M-x package-install [RET] zxc-db [RET]
+  #+END_SRC
+* 配置
+  加载zxc-db,然后启动后端服务
+  #+BEGIN_SRC lisp
+  (require 'zxc)
+  (zxc-backend-init)
+  #+END_SRC
+* 用法
+** 添加数据库
+   在安装路径的backend/conf/database.properties中添加jdbc连接信息(proxool配置风格)，如添加一个mysql和一个oracle数据库
+   #+BEGIN_SRC conf
+   jdbc-0.proxool.alias=abc
+   jdbc-0.proxool.driver-url=jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=UTF-8
+   jdbc-0.proxool.driver-class=com.mysql.jdbc.Driver
+   jdbc-0.user=root
+   jdbc-0.password=root
+   jdbc-0.proxool.maximum-connection-count=10
+   jdbc-0.proxool.house-keeping-test-sql=select CURRENT_DATE
+
+   jdbc-1.proxool.alias=oracleXe
+   jdbc-1.proxool.driver-url=jdbc:oracle:thin:@localhost:1521:xe
+   jdbc-1.proxool.driver-class=oracle.jdbc.OracleDriver
+   jdbc-1.user=username
+   jdbc-1.password=password
+   jdbc-1.proxool.maximum-connection-count=10
+   jdbc-1.proxool.house-keeping-test-sql=select 1 from dual
+   #+END_SRC
+
+   注意:
+   配置中的jdbc-{num}，num不能重复。
+   添加新的数据库配置后需要重启backend的springboot进程
+** sql客户端使用
+   默认zxc minor mode 会在sql mode和shell mode下开启，通过C-; C-; 可以在任何模式下开启zxc minor mode。
+   当zxc minor mode开启时，可以执行以下命令
+   "C-; aa" 设置当前buffer对应的后端数据库，别名要和database.properties中的别名保持一致，如设置为abc或者oracleXe，你会看到lighter中显示Zxc[abc]
+   "C-; cs" 获取选中表名的包含所有字段的查询语句
+
+   "C-; de" 发送当前段落或者选中区域的dml语句执行
+   "C-; ds" 发送当前段落或者选中区域的查询语句执行
+   "C-; dt" 获取选中表名的建表语句
+   "C-; ac" 启动表名自动补全，需要在backend/interval.properties中配置，格式 {alias}-interval=20,20代表20秒更新一次表名的缓存信息
+
+   [[file:screenshot/screen1.png][file:screenshot/screen1.png]]
+
+   [[file:screenshot/screen2.png][file:screenshot/screen2.png]]
+** 扩展数据库支持
+   1. 在安装路径的backend/jdbclib中放入对应数据类型的jdbcjar包
+   2. 在backend/velocity中添加对应的vm模板，可以参考mysql相关vm模板，其中head模板是必须的。
+   3. 在backend/application.properties中的databaseReg中增加对应数据库的正则表单式
