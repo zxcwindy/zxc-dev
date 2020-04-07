@@ -21,19 +21,31 @@
 
 ;;; Commentary:
 
-;;; Emacs SQL client, using springboot and JDBC as back-end services.
+;; Emacs SQL client, using springboot and JDBC as back-end services.
+;;
+;; First add database info in backend/database.properties
+;;
+;; For Example
+;; jdbc-0.proxool.alias=abc
+;; jdbc-0.proxool.driver-url=jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=UTF-8
+;; jdbc-0.proxool.driver-class=com.mysql.jdbc.Driver
+;; jdbc-0.user=root
+;; jdbc-0.password=root
+;; jdbc-0.proxool.maximum-connection-count=10
+;; jdbc-0.proxool.house-keeping-test-sql=select CURRENT_DATE
+
 ;; Init:
 ;; (require 'zxc)
 ;; (zxc-backend-init)
 
 ;; Usage:
 
- ;; "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[ABC] is displayed in the lighter
- ;; "C-; cs" Gets the query statement containing all fields for the selected table name
- ;; "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
- ;; "C-; ds" Send the query statement of the current paragraph or selected area to execute
- ;; "C-; dt" Get the table creation statement of the selected table name
- ;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
+;; "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[abc] is displayed in the lighter
+;; "C-; cs" Gets the query statement containing all fields for the selected table name
+;; "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
+;; "C-; ds" Send the query statement of the current paragraph or selected area to execute
+;; "C-; dt" Get the table creation statement of the selected table name
+;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
 
 (require 'zxc-db)
 
