@@ -18,8 +18,10 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
 ;;
+;; Emacs SQL client, using springboot and JDBC as back-end services.
+
+;;; Code:
 
 (require 'url)
 (require 'json)

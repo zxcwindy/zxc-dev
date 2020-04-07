@@ -47,6 +47,8 @@
 ;; "C-; dt" Get the table creation statement of the selected table name
 ;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
 
+;;; Code:
+
 (require 'zxc-db)
 
 ;;;; Minor Mode Definition
