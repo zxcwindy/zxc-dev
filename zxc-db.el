@@ -1,9 +1,5 @@
 ;;; zxc-db.el --- database client
 
-;; Author: zhengxc <zh_xi_ch@126.com>
-;; Keywords: emacs sql client
-;; version: 1.0.0
-
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -18,8 +14,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;;
-;; Emacs SQL client, using springboot and JDBC as back-end services.
 
 ;;; Code:
 

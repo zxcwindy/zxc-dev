@@ -24,7 +24,7 @@
 * Configuration
   load zxc-db package,start up backbend service
   #+BEGIN_SRC lisp
-  (require 'zxc)
+  (require 'zxc-dev)
   (zxc-backend-init)
   #+END_SRC
 * Usage

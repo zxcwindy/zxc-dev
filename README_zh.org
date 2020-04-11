@@ -22,7 +22,7 @@
 * 配置
   加载zxc-db,然后启动后端服务
   #+BEGIN_SRC lisp
-  (require 'zxc)
+  (require 'zxc-dev)
   (zxc-backend-init)
   #+END_SRC
 * 用法

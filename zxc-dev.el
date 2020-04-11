@@ -35,7 +35,7 @@
 ;; jdbc-0.proxool.house-keeping-test-sql=select CURRENT_DATE
 
 ;; Init:
-;; (require 'zxc)
+;; (require 'zxc-dev)
 ;; (zxc-backend-init)
 
 ;; Usage:
@@ -53,27 +53,27 @@
 
 ;;;; Minor Mode Definition
 
-(defvar zxc-mode-map (make-sparse-keymap)
+(defvar zxc-dev-mode-map (make-sparse-keymap)
   "Keymap for the zxc minor mode.")
 
 (make-variable-buffer-local
- (defvar zxc-mode-lighter "Zxc"))
+ (defvar zxc-dev-mode-lighter "Zxc"))
 
-(define-minor-mode zxc-mode
-  "Minor mode for Zxc"
-  :lighter (" " zxc-mode-lighter))
+(define-minor-mode zxc-dev-mode
+  "Minor mode for Zxc dev"
+  :lighter (" " zxc-dev-mode-lighter))
 
-(global-set-key (kbd "C-; C-;") 'zxc-mode)
-(define-key zxc-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
-(define-key zxc-mode-map (kbd  "C-; cq") #'zxc-util-convert-table-to-sql)
-(define-key zxc-mode-map (kbd  "C-; de") #'zxc-db-send-region-exec)
-(define-key zxc-mode-map (kbd  "C-; ds") #'zxc-db-send-region-query)
-(define-key zxc-mode-map (kbd  "C-; dt") #'zxc-db-get-table-sql)
-(define-key zxc-mode-map (kbd  "C-; aa") #'zxc-db-ac-set-db-alias)
-(define-key zxc-mode-map (kbd  "C-; ac") #'zxc-db-ac-toggle)
+(global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
+(define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
+(define-key zxc-dev-mode-map (kbd  "C-; cq") #'zxc-util-convert-table-to-sql)
+(define-key zxc-dev-mode-map (kbd  "C-; de") #'zxc-db-send-region-exec)
+(define-key zxc-dev-mode-map (kbd  "C-; ds") #'zxc-db-send-region-query)
+(define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-db-get-table-sql)
+(define-key zxc-dev-mode-map (kbd  "C-; aa") #'zxc-db-ac-set-db-alias)
+(define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-db-ac-toggle)
 
 (mapc #'(lambda (mode-hook)
-	  (add-hook mode-hook 'zxc-mode))
+	  (add-hook mode-hook 'zxc-dev-mode))
       (list 'shell-mode-hook 'sql-mode-hook))
 
 (defun zxc-backend-init ()
@@ -88,4 +88,4 @@
 		       (shell buffer-name))))))
 
 
-(provide 'zxc)
+(provide 'zxc-dev)
