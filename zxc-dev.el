@@ -36,7 +36,8 @@
 
 ;; Init:
 ;; (require 'zxc-dev)
-;; (zxc-backend-init)
+;; (zxc-dev-set-local-config-dir "~/.emacs.d/zxc-dev-example")  ;; Initialize only once
+;; (zxc-dev-start)
 
 ;; Usage:
 
@@ -63,6 +64,12 @@
   "Minor mode for Zxc dev"
   :lighter (" " zxc-dev-mode-lighter))
 
+(defvar zxc-dev-local-config-folder nil
+  "local configuration folder")
+
+(defvar zxc-dev-template-path nil
+  "template configuration path")
+
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
 (define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
 (define-key zxc-dev-mode-map (kbd  "C-; cq") #'zxc-util-convert-table-to-sql)
@@ -76,16 +83,33 @@
 	  (add-hook mode-hook 'zxc-dev-mode))
       (list 'shell-mode-hook 'sql-mode-hook))
 
-(defun zxc-backend-init ()
+(defun zxc-dev-set-local-config-dir (dir-path)
+  "set local configuration folder,copy resources from the template to the folder"
+  (unless (file-directory-p dir-path)
+      (make-directory dir-path))
+  (setq zxc-dev-local-config-folder (concat (directory-file-name dir-path) "/"))
+  (setq zxc-dev-template-path (concat (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query))) "backend/"))
+  (loop for config-dir in (list "conf/" "jdbclib/" "velocity/")
+	do
+	(let ((source-dir (concat zxc-dev-template-path config-dir))
+	      (target-dir (concat zxc-dev-local-config-folder config-dir)))
+	  (ignore-errors (make-directory target-dir))
+	  (mapc #'(lambda (f)
+		    (unless (file-exists-p (concat target-dir f))
+		      (copy-file (concat source-dir f) target-dir)))
+		(seq-filter #'(lambda (file-name)
+				(and (not (equal file-name ".")) (not (equal file-name ".."))))
+			    (directory-files source-dir))))))
+
+(defun zxc-dev-start ()
   "startup springboot backend"
   (save-excursion
     (make-thread #'(lambda ()
-		     (let ((buffer-name "*zxc-backend*")
-			   (script-path (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query)))))
+		     (let ((buffer-name "*zxc-backend*"))
 		       (if (eq nil (get-buffer buffer-name))
 			   (progn
 			     (shell buffer-name)
-			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat script-path "backend/run.sh")))
+			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh")))
 			 (shell buffer-name)))))))
 
 
