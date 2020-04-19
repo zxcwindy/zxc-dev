@@ -1,7 +1,7 @@
 ;; zxc.el --- my util tools collection
 
 ;; Author: zhengxc <zh_xi_ch@126.com>
-;; Keywords: sql client
+;; Keywords: sql client; file tag system
 ;; version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-db
 ;; Package-Requires: ((ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1"))
@@ -78,14 +78,15 @@
 
 (defun zxc-backend-init ()
   "startup springboot backend"
-  (make-thread #'(lambda ()
-		   (let ((buffer-name "*zxc-backend*")
-			 (script-path (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query)))))
-		     (if (eq nil (get-buffer buffer-name))
-			 (progn
-			   (shell buffer-name)
-			   (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat script-path "backend/run.sh")))
-		       (shell buffer-name))))))
+  (save-excursion
+    (make-thread #'(lambda ()
+		     (let ((buffer-name "*zxc-backend*")
+			   (script-path (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query)))))
+		       (if (eq nil (get-buffer buffer-name))
+			   (progn
+			     (shell buffer-name)
+			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat script-path "backend/run.sh")))
+			 (shell buffer-name)))))))
 
 
 (provide 'zxc-dev)
