@@ -89,7 +89,7 @@
       (make-directory dir-path))
   (setq zxc-dev-local-config-folder (concat (directory-file-name dir-path) "/"))
   (setq zxc-dev-template-path (concat (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query))) "backend/"))
-  (loop for config-dir in (list "conf/" "jdbclib/" "velocity/")
+  (loop for config-dir in (list "conf/" "jdbclib/" "velocity/" "tagdb/")
 	do
 	(let ((source-dir (concat zxc-dev-template-path config-dir))
 	      (target-dir (concat zxc-dev-local-config-folder config-dir)))
