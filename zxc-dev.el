@@ -21,7 +21,7 @@
 
 ;;; Commentary:
 
-;; Emacs SQL client, using springboot and JDBC as back-end services.
+;; Emacs SQL client and File tag System, using springboot and JDBC as back-end services.
 ;;
 ;; First add database info in backend/database.properties
 ;;
@@ -38,9 +38,11 @@
 ;; (require 'zxc-dev)
 ;; (zxc-dev-set-local-config-dir "~/.emacs.d/zxc-dev-example")  ;; Initialize only once
 ;; (zxc-dev-start)
+;; set jdbc-56123.proxool.driver-url=jdbc:h2:~/.emacs.d/zxc-dev-example/tagdb/tags.db
 
 ;; Usage:
 
+;; SQL Client
 ;; "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[abc] is displayed in the lighter
 ;; "C-; cs" Gets the query statement containing all fields for the selected table name
 ;; "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
@@ -48,9 +50,18 @@
 ;; "C-; dt" Get the table creation statement of the selected table name
 ;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
 
+;; File tag
+;; "C-; t" display all tags
+;; "C-u C-; t" create tags
+;; "b" display all tag in current dir
+;; "e" edit tag when in dired mode
+;; "C-u <backspace>" quit edit tag when in dired mode
+
+
 ;;; Code:
 
 (require 'zxc-db)
+(require 'zxc-ft)
 
 ;;;; Minor Mode Definition
 
@@ -78,6 +89,7 @@
 (define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-db-get-table-sql)
 (define-key zxc-dev-mode-map (kbd  "C-; aa") #'zxc-db-ac-set-db-alias)
 (define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-db-ac-toggle)
+(global-set-key (kbd "C-; t") 'zxc-ft)
 
 (mapc #'(lambda (mode-hook)
 	  (add-hook mode-hook 'zxc-dev-mode))
@@ -109,7 +121,7 @@
 		       (if (eq nil (get-buffer buffer-name))
 			   (progn
 			     (shell buffer-name)
-			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh")))
+			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh " zxc-dev-local-config-folder)))
 			 (shell buffer-name)))))))
 
 

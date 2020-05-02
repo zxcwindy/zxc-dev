@@ -45,6 +45,9 @@
 ;; create index tag_file_tag_id on tag_file (tag_id);
 ;; create index tag_file_file_id on tag_file (file_id);
 
+
+(require 'http-post-simple)
+(require 'json)
 (require 'zxc-db)
 
 (defvar zxc-ft-buffer nil
@@ -89,6 +92,33 @@
   "color of keys")
 
 (defvar zxc-ft-init-p nil)
+
+(defvar http-data nil "response text")
+
+(defun http-method (url method &optional fields)
+  "GET or POST method for http request,returning the response head,status code,data"
+  (if (string= (upcase method) "POST")
+      (http-post-simple url fields)
+    (http-get-simple url fields)))
+
+(defun http-json-2-lisp (lst)
+  "when the response status is 200 and it's data is a json string,
+convert a json string to plist object"
+  (multiple-value-bind (data head status) lst
+    (setf data (decode-coding-string data 'utf-8))
+    (if (= status 200)
+	(condition-case err
+	    (let ((json-object-type 'plist)
+		  (json-array-type 'list)
+		  (json-false nil))
+	      (setf http-data (json-read-from-string data)))
+	  (json-readtable-error
+	   (message "返回的不是正确的json字符串:%s" data)))
+      (minibuffer-message status))))
+
+(defun http-post (url &optional fields)
+  "POST method"
+  (http-json-2-lisp (http-method url "POST" fields)))
 
 (defun zxc-ft (arg)
   "Start file tag system"
