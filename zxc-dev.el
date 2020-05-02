@@ -4,7 +4,7 @@
 ;; Keywords: sql client; file tag system
 ;; version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-db
-;; Package-Requires: ((ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1"))
+;; Package-Requires: ((ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
