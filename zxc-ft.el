@@ -94,15 +94,15 @@
 
 (defvar zxc-ft-init-p nil)
 
-(defvar http-data nil "response text")
+(defvar zxc-http-data nil "response text")
 
-(defun http-method (url method &optional fields)
+(defun zxc-http-method (url method &optional fields)
   "GET or POST method for http request,returning the response head,status code,data"
   (if (string= (upcase method) "POST")
       (http-post-simple url fields)
     (http-get-simple url fields)))
 
-(defun http-json-2-lisp (lst)
+(defun zxc-http-json-2-lisp (lst)
   "when the response status is 200 and it's data is a json string,
 convert a json string to plist object"
   (multiple-value-bind (data head status) lst
@@ -112,14 +112,14 @@ convert a json string to plist object"
 	    (let ((json-object-type 'plist)
 		  (json-array-type 'list)
 		  (json-false nil))
-	      (setf http-data (json-read-from-string data)))
+	      (setf zxc-http-data (json-read-from-string data)))
 	  (json-readtable-error
 	   (message "error json format:%s" data)))
       (minibuffer-message status))))
 
-(defun http-post (url &optional fields)
+(defun zxc-http-post (url &optional fields)
   "POST method"
-  (http-json-2-lisp (http-method url "POST" fields)))
+  (zxc-http-json-2-lisp (zxc-http-method url "POST" fields)))
 
 (defun zxc-mode-action-str (mode-map newstr &optional func-or-shortcut)
   "If FUNC-OR-SHORTCUT is non-nil and if it is a function, call it
@@ -235,13 +235,13 @@ clicked."
 
 (defun zxc-ft-query-data (param)
   "Data query service of tag"
-  (getf (http-post zxc-ft-query-url
+  (getf (zxc-http-post zxc-ft-query-url
 		   param)
 	:data))
 
 (defun zxc-ft-exec-data (sql)
   "Data update service for tag"
-  (http-post zxc-ft-exec-url
+  (zxc-http-post zxc-ft-exec-url
 	     (list (cons 'sql sql))))
 
 (defun zxc-get-action-key (key-str)
