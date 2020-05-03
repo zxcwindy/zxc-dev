@@ -1,4 +1,4 @@
-;;; zxc-dev.el --- dev util tools collection -*- lexical-binding: t -*-
+;;; zxc-dev.el --- file tag system and sql client -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 zhengxc
 
