@@ -1,5 +1,5 @@
-* zxc-db
-  + Emacs SQL client, using springboot and JDBC as back-end services.
+* zxc-dev
+  + Emacs File Tag System and SQL client, using springboot and JDBC as back-end services.
   + [[file:README_zh.org::*][中文说明]]
 * Requirement
   + jdk1.8+
@@ -17,55 +17,83 @@
 * Installation
   Add MELPA (if not yet present) to your package-archives list.
 
-  Then you can install zxc-db with the following command:
+  Then you can install zxc-dev with the following command:
   #+BEGIN_SRC
-  M-x package-install [RET] zxc-db [RET]
+  M-x package-install [RET] zxc-dev [RET]
   #+END_SRC
 * Configuration
-  load zxc-db package,start up backbend service
+  load zxc-dev package,start up backbend service
   #+BEGIN_SRC lisp
   (require 'zxc-dev)
-  (zxc-backend-init)
+  (zxc-dev-set-local-config-dir "~/.emacs.d/zxc-dev-example")
+  (zxc-dev-start)
   #+END_SRC
 * Usage
-** add database
-   Add JDBC connection  in backend/conf/database.properties of the installation path (Proxool configuration style)，eg
-   #+BEGIN_SRC conf
-   jdbc-0.proxool.alias=abc
-   jdbc-0.proxool.driver-url=jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=UTF-8
-   jdbc-0.proxool.driver-class=com.mysql.jdbc.Driver
-   jdbc-0.user=root
-   jdbc-0.password=root
-   jdbc-0.proxool.maximum-connection-count=10
-   jdbc-0.proxool.house-keeping-test-sql=select CURRENT_DATE
+** Sql Client
+*** add database
+    Add JDBC connection  in backend/conf/database.properties of the installation path (Proxool configuration style)，eg
+    #+BEGIN_SRC conf
+    jdbc-0.proxool.alias=abc
+    jdbc-0.proxool.driver-url=jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=UTF-8
+    jdbc-0.proxool.driver-class=com.mysql.jdbc.Driver
+    jdbc-0.user=root
+    jdbc-0.password=root
+    jdbc-0.proxool.maximum-connection-count=10
+    jdbc-0.proxool.house-keeping-test-sql=select CURRENT_DATE
 
-   jdbc-1.proxool.alias=oracleXe
-   jdbc-1.proxool.driver-url=jdbc:oracle:thin:@localhost:1521:xe
-   jdbc-1.proxool.driver-class=oracle.jdbc.OracleDriver
-   jdbc-1.user=username
-   jdbc-1.password=password
-   jdbc-1.proxool.maximum-connection-count=10
-   jdbc-1.proxool.house-keeping-test-sql=select 1 from dual
-   #+END_SRC
+    jdbc-1.proxool.alias=oracleXe
+    jdbc-1.proxool.driver-url=jdbc:oracle:thin:@localhost:1521:xe
+    jdbc-1.proxool.driver-class=oracle.jdbc.OracleDriver
+    jdbc-1.user=username
+    jdbc-1.password=password
+    jdbc-1.proxool.maximum-connection-count=10
+    jdbc-1.proxool.house-keeping-test-sql=select 1 from dual
+    #+END_SRC
 
-   note:
-   jdbc-{num}，{num} cannot be repeated.
-   You need to restart the springboot process after adding a new database configuration, execute backend/run.sh
-** execute sql
-   + By default, zxc minor mode will be enabled in SQL mode and shell mode. You can enable zxc minor mode in any mode through "C -; C -;"
-   + When zxc minor mode is enabled, you can execute the following command
-   + "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[ABC] is displayed in the lighter
-   + "C-; cs" Gets the query statement containing all fields for the selected table name
+    note:
+    jdbc-{num}，{num} cannot be repeated.
+    You need to restart the springboot process after adding a new database configuration, execute backend/run.sh
+*** execute sql
+    + By default, zxc minor mode will be enabled in SQL mode and shell mode. You can enable zxc minor mode in any mode through "C -; C -;"
+    + When zxc minor mode is enabled, you can execute the following command
+    + "C-; aa" Set the backend database connection corresponding to the current buffer.The alias should be consistent with the alias in database.properties.For example, if you set it to abc, you will see that Zxc[ABC] is displayed in the lighter
+    + "C-; cs" Gets the query statement containing all fields for the selected table name
 
-   + "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
-   + "C-; ds" Send the query statement of the current paragraph or selected area to execute
-   + "C-; dt" Get the table creation statement of the selected table name
-   + "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds
+    + "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
+    + "C-; ds" Send the query statement of the current paragraph or selected area to execute
+    + "C-; dt" Get the table creation statement of the selected table name
+    + "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds
 
-   [[file:screenshot/screen1.png][file:screenshot/screen1.png]]
+    [[file:screenshot/screen1.png][file:screenshot/screen1.png]]
 
-   [[file:screenshot/screen2.png][file:screenshot/screen2.png]]
-** Extended database support
-   1. Put the corresponding database type JDBC jar package in the backend/jdbc of the installation path
-   2. To add velocity template in backend/velocity, you can refer to MySQL template .Head template is required.
-   3. Add the regular form type of corresponding database in databaseReg in backend/application.properties,default value is .*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*
+    [[file:screenshot/screen2.png][file:screenshot/screen2.png]]
+*** Extended database support
+    1. Put the corresponding database type JDBC jar package in the backend/jdbc of the installation path
+    2. To add velocity template in backend/velocity, you can refer to MySQL template .Head template is required.
+    3. Add the regular form type of corresponding database in databaseReg in backend/application.properties,default value is .*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*
+** File Tag System
+*** Usage
+    + "C-; t" display all tags
+    + "C-u C-; t" create tags
+    + "b" display all tag in current dir
+    + "e" edit tag when in dired mode
+    + "C-u <backspace>" quit edit tag when in dired mode
+
+    [[file:screenshot/screen3.png][file:screenshot/screen3.png]]
+
+    [[file:screenshot/screen4.png][file:screenshot/screen4.png]]
+
+    [[file:screenshot/screen5.png][file:screenshot/screen5.png]]
+
+    [[file:screenshot/screen6.png][file:screenshot/screen6.png]]
+
+    [[file:screenshot/screen7.png][file:screenshot/screen7.png]]
+*** update or delete
+    in zxc dev mode (C-; C-;)
+    choose database tag (C-; a a tag),execute sql
+    #+BEGIN_SRC
+    delete from files_ where id in (....);
+    delete from tags_ where id in (....);
+
+    update tags_ set .... where ...;
+    #+END_SRC
