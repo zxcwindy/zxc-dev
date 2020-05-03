@@ -29,7 +29,7 @@
 * 用法
 ** Sql客户端
 *** 添加数据库
-    在安装路径的backend/conf/database.properties中添加jdbc连接信息(proxool配置风格)，如添加一个mysql和一个oracle数据库
+    在配置路径的{zxc-dev-set-local-config-dir}/conf/database.properties中添加jdbc连接信息(proxool配置风格)，如添加一个mysql和一个oracle数据库
     #+BEGIN_SRC conf
     jdbc-0.proxool.alias=abc
     jdbc-0.proxool.driver-url=jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=UTF-8
@@ -60,14 +60,14 @@
     - "C-; de" 发送当前段落或者选中区域的dml语句执行
     - "C-; ds" 发送当前段落或者选中区域的查询语句执行
     - "C-; dt" 获取选中表名的建表语句
-    - "C-; ac" 启动表名自动补全，需要在backend/interval.properties中配置，格式 {alias}-interval=20,20代表20秒更新一次表名的缓存信息
+    - "C-; ac" 启动表名自动补全，需要在{zxc-dev-set-local-config-dir}/interval.properties中配置，格式 {alias}-interval=20,20代表20秒更新一次表名的缓存信息
 
     [[file:screenshot/screen1.png][file:screenshot/screen1.png]]
 
     [[file:screenshot/screen2.png][file:screenshot/screen2.png]]
 *** 扩展数据库支持
-    1. 在安装路径的backend/jdbclib中放入对应数据类型的jdbcjar包
-    2. 在backend/velocity中添加对应的vm模板，可以参考mysql相关vm模板，其中head模板是必须的。
+    1. 在配置路径的{zxc-dev-set-local-config-dir}/jdbclib中放入对应数据类型的jdbcjar包
+    2. 在{zxc-dev-set-local-config-dir}/velocity中添加对应的vm模板，可以参考mysql相关vm模板，其中head模板是必须的。
     3. 在backend/application.properties中的databaseReg中增加对应数据库的正则表达式，默认值是".*(db2|oracle|mysql|sql server|hive|asterdata|gbase|postgresql|phoenix|sqlite|h2).*"
 ** 标签文件系统
 *** 用法
