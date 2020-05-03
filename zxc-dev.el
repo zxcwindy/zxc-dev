@@ -5,7 +5,7 @@
 ;; Author: zhengxc <zh_xi_ch@126.com>
 ;; Keywords: sql client, file tag system
 ;; Version: 1.0.0
-;; URL: https://github.com/zxcwindy/zxc-db
+;; URL: https://github.com/zxcwindy/zxc-dev
 ;; Package-Requires: ((emacs "26") (ctable "20171006.11") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0") (page-break-lines "20181221.2308") (switch-window "1.6.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
