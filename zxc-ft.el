@@ -410,9 +410,11 @@ clicked."
 		  (pos (or (gethash file-name zxc-ft-dired-file-pos)
 			   (progn
 			     (goto-char (point-min))
-			     (puthash file-name (search-forward (nth 3 tag-info)) zxc-ft-dired-file-pos))))
-		  (ol (or (car (overlays-in pos pos)) (make-overlay pos pos))))
-	     (overlay-put ol 'after-string (propertize (concat (overlay-get ol 'after-string)  " " (nth 2 tag-info)) 'face 'font-lock-doc-face)))))
+			     (search-forward (nth 3 tag-info) nil t)))))
+	     (when pos
+	       (let ((ol (or (car (overlays-in pos pos)) (make-overlay pos pos))))
+		 (puthash file-name pos zxc-ft-dired-file-pos)
+		 (overlay-put ol 'after-string (propertize (concat (overlay-get ol 'after-string)  " " (nth 2 tag-info)) 'face 'font-lock-doc-face)))))))
 
 (defun zxc-ft-dired-mark-tags ()
   "tag the selected files in the current folder"
