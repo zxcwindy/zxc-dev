@@ -1,4 +1,7 @@
-;;; zxc-db.el --- database client
+;;; zxc-db.el --- Emacs database client
+
+;; Version: 1.0.0
+;; URL: https://github.com/zxcwindy/zxc-dev
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,6 +18,8 @@
 
 ;;; Commentary:
 
+;; Emacs sql client.
+
 ;;; Code:
 
 (require 'url)
@@ -27,20 +32,21 @@
  (defvar zxc-db-host "http://localhost:9990"
    "backend host"))
 
-(defvar zxc-db-query-param nil "query parameters")
+(defvar zxc-db-query-param nil "Query parameters.")
 
-(defvar zxc-db-exec-param nil "execute parameters")
+(defvar zxc-db-exec-param nil "Execute parameters.")
 
-(defvar zxc-db-get-create-sql-url "%s/service/rest/dbMeta/getCreateSql/%s/%s" "tablename service url")
+(defvar zxc-db-get-create-sql-url "%s/service/rest/dbMeta/getCreateSql/%s/%s" "Tablename service url.")
 
 (defvar zxc-db-result nil
-  "result dataset")
+  "Result dataset.")
 
 (defun zxc-db-send (uri object zxc-db-callback)
-  "Send object to URL as an HTTP POST request, returning the response
-and response headers.
-object is an json, eg {key:value} they are encoded using CHARSET,
-which defaults to 'utf-8"
+  "Send OBJECT to URL as an HTTP POST request.
+returning the response and response headers.
+object is an json,
+eg {key:value} they are encoded using CHARSET,which defaults to 'utf-8
+Argument URI url."
   (lexical-let ((zxc-db-callback zxc-db-callback))
     (deferred:$
       (deferred:url-post (format "%s/service/rest/data/%s/%s" zxc-db-host uri zxc-db-ac-db-alias) object)
@@ -58,8 +64,10 @@ which defaults to 'utf-8"
 
 ;;temp-func
 (defun zxc-db-get (uri zxc-db-callback)
-  "Send object to URL as an HTTP GET request, returning the response
-and response headers, object is an text."
+  "Send object to URL as an HTTP GET request.
+returning the response and response headers, object is an text.
+Argument URI url.
+Argument ZXC-DB-CALLBACK callback function."
   (lexical-let ((zxc-db-callback zxc-db-callback))
     (deferred:$
       (deferred:url-get uri)
@@ -73,13 +81,13 @@ and response headers, object is an text."
 	  (funcall zxc-db-callback))))))
 
 (defun zxc-db-create-column ()
-  "创建表头"
+  "Create table header."
   (mapcar #'(lambda (meta-info)
 	      (make-ctbl:cmodel :title meta-info :align 'center :sorter nil))
 	  (getf zxc-db-result :metadata)))
 
 (defun zxc-db-create-table-buffer ()
-  "创建结果表格"
+  "Create result table."
   (let ((cp
 	 (ctbl:create-table-component-buffer
 	  :width nil :height nil
@@ -94,7 +102,7 @@ and response headers, object is an text."
       (kill-buffer pre-10-tbl))))
 
 (defun zxc-db-get-table-name ()
-  "get table name"
+  "Get table name."
   (if (region-active-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
     (let ((start (save-excursion
@@ -107,7 +115,7 @@ and response headers, object is an text."
       (buffer-substring-no-properties start end))))
 
 (defun zxc-db-query-callback ()
-  "query callback"
+  "Query callback."
   (let ((error-msg (getf zxc-db-result :errorMsg)))
     (if (null error-msg)
 	(save-excursion
@@ -119,7 +127,7 @@ and response headers, object is an text."
       (display-buffer "*zxc-db-log*"))))
 
 (defun zxc-db-exec-callback ()
-  "executer callback"
+  "Executer callback."
   (let ((error-msg (getf zxc-db-result :errorMsg)))
     (if (null error-msg)
 	(message "update %s" (getf zxc-db-result :result))
@@ -130,7 +138,7 @@ and response headers, object is an text."
       (display-buffer "*zxc-db-log*"))))
 
 (defun zxc-db-get-callback ()
-  "http get callback"
+  "Http get callback."
   (if (region-active-p)
       (delete-region (region-beginning) (region-end))
     (zxc-delete-current-word))
@@ -139,31 +147,33 @@ and response headers, object is an text."
 
 
 (defun zxc-db-send-region-query ()
-  "Execute the Query SQL statement of the current region"
+  "Execute the Query SQL statement of the current region."
   (interactive)
-  (zxc-db-send "query" (list (cons "sql" (zxc-util-get-region-or-paragraph-string))) #'zxc-db-query-callback))
+  (zxc-db-send "query" (list (cons "sql" (zxc-db-util-get-region-or-paragraph-string))) #'zxc-db-query-callback))
 
 (defun zxc-db-send-region-exec ()
-  "Execute the DML SQL statement of the current region"
+  "Execute the DML SQL statement of the current region."
   (interactive)
-  (zxc-db-send "exec" (list (cons "sql" (zxc-util-get-region-or-paragraph-string))) #'zxc-db-exec-callback))
+  (zxc-db-send "exec" (list (cons "sql" (zxc-db-util-get-region-or-paragraph-string))) #'zxc-db-exec-callback))
 
 (defun zxc-db-get-data (func)
+  "Query data and execute callback function.
+Argument FUNC callback."
   (zxc-db-get (format "%s/service/rest/dbMeta/%s/%s/%s" zxc-db-host func zxc-db-ac-db-alias (zxc-db-get-table-name))  #'zxc-db-get-callback))
 
 
 (defun zxc-db-get-table-sql ()
-  "Get table creation statement"
+  "Get table creation statement."
   (interactive)
   (zxc-db-get-data "getCreateSql"))
 
 (defun zxc-db-get-select-sql ()
-  "get query sql statement"
+  "Get query sql statement."
   (interactive)
   (zxc-db-get-data "getSelectSql"))
 
-(defun zxc-util-get-region-or-paragraph-string ()
-  "Get the text content of the current selected area or current paragraph"
+(defun zxc-db-util-get-region-or-paragraph-string ()
+  "Get the text content of the current selected area or current paragraph."
   (if (region-active-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
     (let ((start (save-excursion
@@ -175,3 +185,7 @@ and response headers, object is an text."
       (buffer-substring-no-properties start end))))
 
 (provide 'zxc-db)
+
+(provide 'zxc-db)
+
+;;; zxc-db.el ends here

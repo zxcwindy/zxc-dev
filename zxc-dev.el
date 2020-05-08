@@ -1,12 +1,12 @@
-;;; zxc-dev.el --- file tag system and sql client -*- lexical-binding: t -*-
+;;; zxc-dev.el --- File tag system and sql client -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2020 zhengxc
 
 ;; Author: zhengxc <zh_xi_ch@126.com>
-;; Keywords: sql client, file tag system
+;; Keywords: tools, sql client and file tag system
 ;; Version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
-;; Package-Requires: ((emacs "26") (ctable "20171006.11") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0") (page-break-lines "20181221.2308") (switch-window "1.6.1"))
+;; Package-Requires: ((emacs "26.1") (ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0") (page-break-lines "20181221.2308") (switch-window "1.6.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@
 ;; "C-; de" Send the insert, update, delete, create, drop and other statements of the current paragraph or selected area to execute
 ;; "C-; ds" Send the query statement of the current paragraph or selected area to execute
 ;; "C-; dt" Get the table creation statement of the selected table name
-;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties. The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
+;; "C-; ac" To start the automatic completion of table name, you need to configure it in backend/interval.properties.  The format is {alias}-interval=20. 20 indicates that the cache information of the table name is updated every 20 seconds (Optional)
 
 ;; File tag
 ;; "C-; t" display all tags
@@ -79,10 +79,10 @@
   :lighter (" " zxc-dev-mode-lighter))
 
 (defvar zxc-dev-local-config-folder nil
-  "local configuration folder")
+  "Local configuration folder.")
 
 (defvar zxc-dev-template-path nil
-  "template configuration path")
+  "Template configuration path.")
 
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
 (define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
@@ -99,7 +99,8 @@
       (list 'shell-mode-hook 'sql-mode-hook))
 
 (defun zxc-dev-set-local-config-dir (dir-path)
-  "set local configuration folder,copy resources from the template to the folder"
+"Set local configuration folder,copy resources from the template to the folder.
+Argument DIR-PATH Custom folder."
   (unless (file-directory-p dir-path)
       (make-directory dir-path))
   (setq zxc-dev-local-config-folder (concat (directory-file-name dir-path) "/"))
@@ -117,7 +118,7 @@
 			    (directory-files source-dir))))))
 
 (defun zxc-dev-start ()
-  "startup springboot backend"
+  "Startup springboot backend."
   (save-excursion
     (make-thread #'(lambda ()
 		     (let ((buffer-name "*zxc-backend*"))
