@@ -71,19 +71,8 @@
 (make-variable-buffer-local
  (defvar zxc-dev-mode-lighter "Zxc"))
 
-(define-minor-mode zxc-dev-mode
-  "Minor mode for Zxc dev"
-  :lighter (" " zxc-dev-mode-lighter))
-
-(defvar zxc-dev-local-config-folder nil
-  "Local configuration folder.")
-
-(defvar zxc-dev-template-path nil
-  "Template configuration path.")
-
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
 (global-set-key (kbd "C-; t") 'zxc-dev-ft)
-
 (defvar zxc-dev-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd  "C-; cs") #'zxc-dev-db-get-select-sql)
@@ -94,6 +83,17 @@
     (define-key map (kbd  "C-; ac") #'zxc-dev-db-ac-toggle)
     map)
   "Keymap for the zxc minor mode.")
+
+(define-minor-mode zxc-dev-mode
+  "Minor mode for Zxc dev"
+  :lighter (" " zxc-dev-mode-lighter)
+  :keymap zxc-dev-mode-map)
+
+(defvar zxc-dev-local-config-folder nil
+  "Local configuration folder.")
+
+(defvar zxc-dev-template-path nil
+  "Template configuration path.")
 
 (mapc (lambda (mode-hook)
 	(add-hook mode-hook 'zxc-dev-mode))
