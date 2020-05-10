@@ -54,7 +54,7 @@
 (require 'http-post-simple)
 (require 'page-break-lines)
 (require 'json)
-(require 'zxc-db)
+(require 'zxc-dev-db)
 (require 'dired)
 (require 'cl-extra)
 
