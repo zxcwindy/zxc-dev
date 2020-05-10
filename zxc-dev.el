@@ -85,23 +85,23 @@
   "Template configuration path.")
 
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
-(define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
-(define-key zxc-dev-mode-map (kbd  "C-; de") #'zxc-db-send-region-exec)
-(define-key zxc-dev-mode-map (kbd  "C-; ds") #'zxc-db-send-region-query)
-(define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-db-get-table-sql)
-(define-key zxc-dev-mode-map (kbd  "C-; aa") #'zxc-db-ac-set-db-alias)
-(define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-db-ac-toggle)
+(define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-dev-db-get-select-sql)
+(define-key zxc-dev-mode-map (kbd  "C-; de") #'zxc-dev-db-send-region-exec)
+(define-key zxc-dev-mode-map (kbd  "C-; ds") #'zxc-dev-db-send-region-query)
+(define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-dev-db-get-table-sql)
+(define-key zxc-dev-mode-map (kbd  "C-; aa") #'zxc-dev-db-ac-set-db-alias)
+(define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-dev-db-ac-toggle)
 (global-set-key (kbd "C-; t") 'zxc-ft)
 
 (mapc #'(lambda (mode-hook)
 	  (add-hook mode-hook 'zxc-dev-mode))
       (list 'shell-mode-hook 'sql-mode-hook))
 
-(defun zxc-db-ac-set-db-alias (alias)
+(defun zxc-dev-db-ac-set-db-alias (alias)
   "Database ALIAS."
   (interactive "sInput Database Alias：")
   (setf zxc-mode-lighter (format "Zxc[%s]" alias))
-  (setf zxc-db-ac-db-alias alias))
+  (setf zxc-dev-db-ac-db-alias alias))
 
 (defun zxc-dev-set-local-config-dir (dir-path)
   "Set local configuration folder.
@@ -110,7 +110,7 @@ Argument DIR-PATH Custom folder."
   (unless (file-directory-p dir-path)
     (make-directory dir-path))
   (setq zxc-dev-local-config-folder (concat (directory-file-name dir-path) "/"))
-  (setq zxc-dev-template-path (concat (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query))) "backend/"))
+  (setq zxc-dev-template-path (concat (file-name-directory (cdr (find-function-library 'zxc-dev-db-send-region-query))) "backend/"))
   (loop for config-dir in (list "conf/" "jdbclib/" "velocity/" "tagdb/")
 	do
 	(let ((source-dir (concat zxc-dev-template-path config-dir))
