@@ -82,7 +82,7 @@
   "Template configuration path.")
 
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
-(global-set-key (kbd "C-; t") 'zxc-ft)
+(global-set-key (kbd "C-; t") 'zxc-dev-ft)
 
 (defvar zxc-dev-mode-map
   (let ((map (make-sparse-keymap)))
