@@ -93,8 +93,8 @@
 (define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-dev-db-ac-toggle)
 (global-set-key (kbd "C-; t") 'zxc-ft)
 
-(mapc #'(lambda (mode-hook)
-	  (add-hook mode-hook 'zxc-dev-mode))
+(mapc (lambda (mode-hook)
+	(add-hook mode-hook 'zxc-dev-mode))
       (list 'shell-mode-hook 'sql-mode-hook))
 
 (defun zxc-dev-db-ac-set-db-alias (alias)
@@ -116,23 +116,23 @@ Argument DIR-PATH Custom folder."
 	(let ((source-dir (concat zxc-dev-template-path config-dir))
 	      (target-dir (concat zxc-dev-local-config-folder config-dir)))
 	  (ignore-errors (make-directory target-dir))
-	  (mapc #'(lambda (f)
-		    (unless (file-exists-p (concat target-dir f))
-		      (copy-file (concat source-dir f) target-dir)))
-		(seq-filter #'(lambda (file-name)
-				(and (not (equal file-name ".")) (not (equal file-name ".."))))
+	  (mapc (lambda (f)
+		  (unless (file-exists-p (concat target-dir f))
+		    (copy-file (concat source-dir f) target-dir)))
+		(seq-filter (lambda (file-name)
+			      (and (not (equal file-name ".")) (not (equal file-name ".."))))
 			    (directory-files source-dir))))))
 
 (defun zxc-dev-start ()
   "Startup springboot backend."
   (save-excursion
-    (make-thread #'(lambda ()
-		     (let ((buffer-name "*zxc-backend*"))
-		       (if (eq nil (get-buffer buffer-name))
-			   (progn
-			     (shell buffer-name)
-			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh " zxc-dev-local-config-folder)))
-			 (shell buffer-name)))))))
+    (make-thread (lambda ()
+		   (let ((buffer-name "*zxc-backend*"))
+		     (if (eq nil (get-buffer buffer-name))
+			 (progn
+			   (shell buffer-name)
+			   (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh " zxc-dev-local-config-folder)))
+		       (shell buffer-name)))))))
 
 (provide 'zxc-dev)
 
