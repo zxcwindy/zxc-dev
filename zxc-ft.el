@@ -55,6 +55,7 @@
 (require 'page-break-lines)
 (require 'json)
 (require 'zxc-db)
+(eval-when-compile (require 'cl))
 
 (defvar zxc-ft-buffer nil
   "The buffer displaying the file tags.")

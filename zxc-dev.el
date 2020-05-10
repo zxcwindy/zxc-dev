@@ -86,7 +86,6 @@
 
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
 (define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-db-get-select-sql)
-(define-key zxc-dev-mode-map (kbd  "C-; cq") #'zxc-util-convert-table-to-sql)
 (define-key zxc-dev-mode-map (kbd  "C-; de") #'zxc-db-send-region-exec)
 (define-key zxc-dev-mode-map (kbd  "C-; ds") #'zxc-db-send-region-query)
 (define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-db-get-table-sql)

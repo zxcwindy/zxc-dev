@@ -27,6 +27,7 @@
 (require 'ctable)
 (require 'zxc-db-ac)
 (require 'deferred)
+(eval-when-compile (require 'cl))
 
 (make-variable-buffer-local
  (defvar zxc-db-host "http://localhost:9990"
