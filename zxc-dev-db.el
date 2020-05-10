@@ -28,7 +28,7 @@
 (require 'ctable)
 (require 'zxc-dev-db-ac)
 (require 'deferred)
-(eval-when-compile (require 'cl))
+(require 'cl-extra)
 
 (defvar zxc-dev-db-query-param nil "Query parameters.")
 

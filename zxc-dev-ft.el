@@ -56,7 +56,7 @@
 (require 'json)
 (require 'zxc-db)
 (require 'dired)
-(eval-when-compile (require 'cl))
+(require 'cl-extra)
 
 (defvar zxc-dev-ft-buffer nil
   "The buffer displaying the file tags.")
