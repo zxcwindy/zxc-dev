@@ -58,6 +58,7 @@
 (require 'dired)
 (require 'cl-extra)
 (require 'dash)
+(require 'wid-edit)
 
 (defvar zxc-dev-ft-buffer nil
   "The buffer displaying the file tags.")
