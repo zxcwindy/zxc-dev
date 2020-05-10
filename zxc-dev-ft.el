@@ -159,7 +159,8 @@ Argument ARG prefix."
   (mapc (lambda (key)
 	  (zxc-dev-ft-mode-action-str zxc-dev-ft-mode-map key 'zxc-dev-ft-tag-choose)) zxc-dev-ft-action-keys)
   (define-key zxc-dev-ft-mode-map (kbd "<backspace>") 'zxc-dev-ft-reset-main-view)
-  (define-key zxc-dev-ft-mode-map (kbd "RET") 'zxc-dev-ft-tag-action))
+  (define-key zxc-dev-ft-mode-map (kbd "RET") 'zxc-dev-ft-tag-action)
+  (setq buffer-read-only nil))
 
 (defun zxc-dev-ft-init ()
   "Initialize."
