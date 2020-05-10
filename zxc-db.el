@@ -29,10 +29,6 @@
 (require 'deferred)
 (eval-when-compile (require 'cl))
 
-(make-variable-buffer-local
- (defvar zxc-db-host "http://localhost:9990"
-   "backend host"))
-
 (defvar zxc-db-query-param nil "Query parameters.")
 
 (defvar zxc-db-exec-param nil "Execute parameters.")

@@ -97,11 +97,17 @@
 	  (add-hook mode-hook 'zxc-dev-mode))
       (list 'shell-mode-hook 'sql-mode-hook))
 
+(defun zxc-db-ac-set-db-alias (alias)
+  "Database ALIAS."
+  (interactive "sInput Database Alias：")
+  (setf zxc-mode-lighter (format "Zxc[%s]" alias))
+  (setf zxc-db-ac-db-alias alias))
+
 (defun zxc-dev-set-local-config-dir (dir-path)
-"Set local configuration folder,copy resources from the template to the folder.
+  "Set local configuration folder,copy resources from the template to the folder.
 Argument DIR-PATH Custom folder."
   (unless (file-directory-p dir-path)
-      (make-directory dir-path))
+    (make-directory dir-path))
   (setq zxc-dev-local-config-folder (concat (directory-file-name dir-path) "/"))
   (setq zxc-dev-template-path (concat (file-name-directory (cdr (find-function-library 'zxc-db-send-region-query))) "backend/"))
   (loop for config-dir in (list "conf/" "jdbclib/" "velocity/" "tagdb/")

@@ -26,13 +26,17 @@
 
 (require 'auto-complete)
 (require 'deferred)
-
+(require 'json)
 
 
 (defvar zxc-db-ac-tablename-url "%s/service/rest/dbMeta/%s/%s" "Host,alias,tablename service url.")
 
 (make-variable-buffer-local
- (defvar zxc-db-ac-db-alias "1" "database alias"))
+ (defvar zxc-db-ac-db-alias "1" "Database alias."))
+
+(make-variable-buffer-local
+ (defvar zxc-db-host "http://localhost:9990"
+   "Backend host."))
 
 (defvar zxc-db-ac-table-name-candidates nil "Tablename candidates.")
 
@@ -41,13 +45,6 @@
 (defvar zxc-db-ac-source
   '((candidates . zxc-db-ac-tablename-candidates))
   "Table name candidates.")
-
-
-(defun zxc-db-ac-set-db-alias (alias)
-  "Database ALIAS."
-  (interactive "sInput Database Alias：")
-  (setf zxc-mode-lighter (format "Zxc[%s]" alias))
-  (setf zxc-db-ac-db-alias alias))
 
 (defun zxc-db-ac-get-tables ()
   "Get table list from server.
