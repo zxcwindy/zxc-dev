@@ -102,7 +102,7 @@
 (defun zxc-dev-db-ac-set-db-alias (alias)
   "Database ALIAS."
   (interactive "sInput Database Alias：")
-  (setf zxc-mode-lighter (format "Zxc[%s]" alias))
+  (setf zxc-dev-mode-lighter (format "Zxc[%s]" alias))
   (setf zxc-dev-db-ac-db-alias alias))
 
 (defun zxc-dev-set-local-config-dir (dir-path)
