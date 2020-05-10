@@ -55,6 +55,7 @@
 (require 'page-break-lines)
 (require 'json)
 (require 'zxc-db)
+(require 'dired)
 (eval-when-compile (require 'cl))
 
 (defvar zxc-ft-buffer nil
@@ -254,7 +255,7 @@ Argument PID parent id in database."
 (defun zxc-ft-query-data (param)
   "Data query service of tag.
 Argument PARAM post params."
-  (getf (zxc-ft-http-post zxc-ft-query-url
+  (cl-getf (zxc-ft-http-post zxc-ft-query-url
 		   param)
 	:data))
 
@@ -368,13 +369,27 @@ Argument RESULTS search result."
   (find-file (concat (aref (tabulated-list-get-entry) 1) "/" (aref (tabulated-list-get-entry) 0))))
 
 
+
+(make-variable-buffer-local
+ (defvar short-name nil
+   "Short name."))
+
+(make-variable-buffer-local
+ (defvar tag-name nil
+   "Tag name."))
+
+(make-variable-buffer-local
+ (defvar tag-pid nil
+   "Tag parent id."))
+
+
 (defun zxc-ft-create-new-tag ()
   "Create a new tag."
   (switch-to-buffer "*ft add tag*")
   (kill-all-local-variables)
-  (set (make-local-variable 'short-name) nil)
-  (set (make-local-variable 'tag-name) nil)
-  (set (make-local-variable 'tag-pid) nil)
+  (setq short-name nil)
+  (setq tag-name nil)
+  (setq tag-pid nil)
   (let ((inhibit-read-only t))
     (erase-buffer))
   (remove-overlays)
@@ -416,8 +431,9 @@ Argument RESULTS search result."
 
 
 ;;; dired mode 扩展
-
-(make-local-variable 'zxc-ft-dired-file-pos )
+(make-variable-buffer-local
+ (defvar zxc-ft-dired-file-pos nil
+   "Store file pos and tags."))
 
 (defun zxc-ft-dired-list-tags ()
   "Display all tags of all files in the current folder."

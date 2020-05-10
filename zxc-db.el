@@ -81,7 +81,7 @@ Argument ZXC-DB-CALLBACK callback function."
   "Create table header."
   (mapcar #'(lambda (meta-info)
 	      (make-ctbl:cmodel :title meta-info :align 'center :sorter nil))
-	  (getf zxc-db-result :metadata)))
+	  (cl-getf zxc-db-result :metadata)))
 
 (defun zxc-db-create-table-buffer ()
   "Create result table."
@@ -91,7 +91,7 @@ Argument ZXC-DB-CALLBACK callback function."
 	  :model
 	  (make-ctbl:model
 	   :column-model (zxc-db-create-column)
-	   :data (getf zxc-db-result :data))))
+	   :data (cl-getf zxc-db-result :data))))
 	(pre-10-tbl (get-buffer (format "*Table: %d*" (- ctbl:uid 10)))))
     (delete-other-windows)		;fix windows bug
     (display-buffer (ctbl:cp-get-buffer cp))
@@ -113,7 +113,7 @@ Argument ZXC-DB-CALLBACK callback function."
 
 (defun zxc-db-query-callback ()
   "Query callback."
-  (let ((error-msg (getf zxc-db-result :errorMsg)))
+  (let ((error-msg (cl-getf zxc-db-result :errorMsg)))
     (if (null error-msg)
 	(save-excursion
 	  (zxc-db-create-table-buffer))
@@ -125,9 +125,9 @@ Argument ZXC-DB-CALLBACK callback function."
 
 (defun zxc-db-exec-callback ()
   "Executer callback."
-  (let ((error-msg (getf zxc-db-result :errorMsg)))
+  (let ((error-msg (cl-getf zxc-db-result :errorMsg)))
     (if (null error-msg)
-	(message "update %s" (getf zxc-db-result :result))
+	(message "update %s" (cl-getf zxc-db-result :result))
       (with-current-buffer (get-buffer-create "*zxc-db-log*")
 	(goto-char (point-max))
 	(insert (decode-coding-string (concat "\n" error-msg) 'utf-8))
@@ -181,7 +181,10 @@ Argument FUNC callback."
 		 (point))))
       (buffer-substring-no-properties start end))))
 
-(provide 'zxc-db)
+(defun zxc-delete-current-word()
+  "Delete current word."
+  (backward-word)
+  (kill-word 1))
 
 (provide 'zxc-db)
 

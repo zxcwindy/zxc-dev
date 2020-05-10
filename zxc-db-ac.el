@@ -25,6 +25,7 @@
 ;;; Code:
 
 (require 'auto-complete)
+(require 'url)
 (require 'deferred)
 (require 'json)
 
