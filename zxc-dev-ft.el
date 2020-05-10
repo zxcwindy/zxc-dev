@@ -6,7 +6,7 @@
 ;; Keywords: file, tags, tools
 ;; Version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
-;; Package-Requires: ((emacs "26.1"))
+;; Package-Requires: ((emacs "26.1") (dash "2.14.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -104,14 +104,6 @@
 
 (defvar zxc-dev-ft-http-data nil "Response text.")
 
-(defun zxc-dev-ft-http-method (url method &optional fields)
-  "GET or POST METHOD for http request.
-Return the response head,status code,data.
-Argument URL http url."
-  (if (string= (upcase method) "POST")
-      (http-post-simple url fields)
-    (http-get-simple url fields)))
-
 (defun zxc-dev-ft-http-json-2-lisp (lst)
   "When the response status is 200 and it's data is a json string.
 convert a json string to plist object
@@ -132,7 +124,7 @@ Argument LST list of data head status."
   "POST method.
 Argument URL url.
 Optional argument FIELDS params."
-  (zxc-dev-ft-http-json-2-lisp (zxc-dev-ft-http-method url "POST" fields)))
+  (zxc-dev-ft-http-json-2-lisp (http-post-simple url fields)))
 
 (defun zxc-dev-ft-mode-action-str (mode-map newstr &optional func-or-shortcut)
   "If func-or-shortcut is non-nil and if it is a function.

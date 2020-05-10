@@ -4,6 +4,7 @@
 ;; Keywords: tools emacs sql client
 ;; version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
+;; Package-Requires: ((emacs "26.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

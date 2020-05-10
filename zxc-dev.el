@@ -6,7 +6,7 @@
 ;; Keywords: tools, sql client and file tag system
 ;; Version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
-;; Package-Requires: ((emacs "26.1") (ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0") (page-break-lines "20181221.2308") (switch-window "1.6.1"))
+;; Package-Requires: ((emacs "26.1") (ctable "0.1.2") (deferred "0.5.1") (auto-complete "1.5.1") (http-post-simple "1.0") (page-break-lines "20181221.2308") (switch-window "1.6.1") (dash "2.14.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
