@@ -184,7 +184,7 @@ Argument ARG prefix."
       (insert "\n\t\t")
       (setq zxc-dev-ft-tag-widget (widget-create
 				   'editable-field
-				   :size 100
+				   :size 30
 				   :format "Currently selected tag: %v "))
       (insert "\n\n")
       (setq zxc-dev-ft-begin-ol (make-overlay (point) (point)))
