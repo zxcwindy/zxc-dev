@@ -97,7 +97,8 @@
     (((background dark)) (:foreground "gray100"))
     (((background light)) (:foreground "gray0"))
     (t (:foreground "gray100")))
-  "color of keys")
+  "color of keys"
+    :group 'zxc-dev-mode)
 
 (defvar zxc-ft-init-p nil)
 

@@ -104,7 +104,8 @@
   (setf zxc-db-ac-db-alias alias))
 
 (defun zxc-dev-set-local-config-dir (dir-path)
-  "Set local configuration folder,copy resources from the template to the folder.
+  "Set local configuration folder.
+copy resources from the template to the folder.
 Argument DIR-PATH Custom folder."
   (unless (file-directory-p dir-path)
     (make-directory dir-path))
@@ -132,7 +133,6 @@ Argument DIR-PATH Custom folder."
 			     (shell buffer-name)
 			     (comint-simple-send (get-buffer-process (get-buffer buffer-name)) (concat zxc-dev-template-path "run.sh " zxc-dev-local-config-folder)))
 			 (shell buffer-name)))))))
-
 
 (provide 'zxc-dev)
 
