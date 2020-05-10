@@ -63,8 +63,8 @@
 ;;; Code:
 
 (require 'find-func)
-(require 'zxc-db)
-(require 'zxc-ft)
+(require 'zxc-dev-db)
+(require 'zxc-dev-ft)
 
 ;;;; Minor Mode Definition
 
