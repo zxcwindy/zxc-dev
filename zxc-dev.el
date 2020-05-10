@@ -68,9 +68,6 @@
 
 ;;;; Minor Mode Definition
 
-(defvar zxc-dev-mode-map (make-sparse-keymap)
-  "Keymap for the zxc minor mode.")
-
 (make-variable-buffer-local
  (defvar zxc-dev-mode-lighter "Zxc"))
 
@@ -85,13 +82,18 @@
   "Template configuration path.")
 
 (global-set-key (kbd "C-; C-;") 'zxc-dev-mode)
-(define-key zxc-dev-mode-map (kbd  "C-; cs") #'zxc-dev-db-get-select-sql)
-(define-key zxc-dev-mode-map (kbd  "C-; de") #'zxc-dev-db-send-region-exec)
-(define-key zxc-dev-mode-map (kbd  "C-; ds") #'zxc-dev-db-send-region-query)
-(define-key zxc-dev-mode-map (kbd  "C-; dt") #'zxc-dev-db-get-table-sql)
-(define-key zxc-dev-mode-map (kbd  "C-; aa") #'zxc-dev-db-ac-set-db-alias)
-(define-key zxc-dev-mode-map (kbd  "C-; ac") #'zxc-dev-db-ac-toggle)
 (global-set-key (kbd "C-; t") 'zxc-ft)
+
+(defvar zxc-dev-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd  "C-; cs") #'zxc-dev-db-get-select-sql)
+    (define-key map (kbd  "C-; de") #'zxc-dev-db-send-region-exec)
+    (define-key map (kbd  "C-; ds") #'zxc-dev-db-send-region-query)
+    (define-key map (kbd  "C-; dt") #'zxc-dev-db-get-table-sql)
+    (define-key map (kbd  "C-; aa") #'zxc-dev-db-ac-set-db-alias)
+    (define-key map (kbd  "C-; ac") #'zxc-dev-db-ac-toggle)
+    map)
+  "Keymap for the zxc minor mode.")
 
 (mapc (lambda (mode-hook)
 	(add-hook mode-hook 'zxc-dev-mode))
