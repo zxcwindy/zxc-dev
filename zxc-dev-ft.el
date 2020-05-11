@@ -6,7 +6,6 @@
 ;; Keywords: file, tags, tools
 ;; Version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
-;; Package-Requires: ((emacs "26.1") (dash "2.14.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -110,10 +109,10 @@
   "When the response status is 200 and it's data is a json string.
 convert a json string to plist object
 Argument LST list of data head status."
-  (multiple-value-bind (data head status) lst
+  (multiple-value-bind (data _head status) lst
     (setf data (decode-coding-string data 'utf-8))
     (if (= status 200)
-	(condition-case err
+	(condition-case _err
 	    (let ((json-object-type 'plist)
 		  (json-array-type 'list)
 		  (json-false nil))
@@ -393,26 +392,26 @@ Argument RESULTS search result."
   (widget-create 'editable-field
 		 :size 13
 		 :format "ShortName: %v "
-		 :notify (lambda (widget &rest ignore)
+		 :notify (lambda (widget &rest _ignore)
 			   (setf zxc-dev-ft-short-name (widget-value widget))))
   (widget-create 'editable-field
 		 :size 13
 		 :format "FullName: %v "
-		 :notify (lambda (widget &rest ignore)
+		 :notify (lambda (widget &rest _ignore)
 			   (setf zxc-dev-ft-tag-name (widget-value widget))))
   (widget-insert "\n")
-  (apply 'widget-create
+  (apply #'widget-create
 	 'menu-choice
 	 :tag "ParentNode"
 	 :value nil
-	 :notify (lambda (widget &rest ignore)
+	 :notify (lambda (widget &rest _ignore)
 		   (setq zxc-dev-ft-tag-pid (widget-value widget)))
 	 '(item :tag "No Parent" :value nil)
 	 (mapcar (lambda (label) (list 'item :tag (nth 2 label) :value (nth 0 label)))
 		 (zxc-dev-ft-query-data '((sql . "select id,short_name,tag_name from tags_ where level_=0")))))
   (widget-insert "\n")
   (widget-create 'push-button
-		 :notify (lambda (&rest ignore)
+		 :notify (lambda (&rest _ignore)
 			   (if (and zxc-dev-ft-short-name zxc-dev-ft-tag-name)
 			       (progn
 				 (if (null zxc-dev-ft-tag-pid)
@@ -507,11 +506,11 @@ Optional argument ARG prefix."
   (remove-overlays)
   (dired-sort-toggle-or-edit arg))
 
-(add-hook 'dired-mode-hook #'(lambda ()
-			       (define-key dired-mode-map (kbd "b") 'zxc-dev-ft-dired-list-tags)
-			       (define-key dired-mode-map (kbd "g") 'zxc-dev-ft-dired-revert-buffer)
-			       (define-key dired-mode-map (kbd "s") 'zxc-dev-ft-dired-sort-buffer)
-			       (define-key dired-mode-map (kbd "e") 'zxc-dev-ft-dired-mark-tags)))
+(add-hook 'dired-mode-hook (lambda ()
+			     (define-key dired-mode-map (kbd "b") 'zxc-dev-ft-dired-list-tags)
+			     (define-key dired-mode-map (kbd "g") 'zxc-dev-ft-dired-revert-buffer)
+			     (define-key dired-mode-map (kbd "s") 'zxc-dev-ft-dired-sort-buffer)
+			     (define-key dired-mode-map (kbd "e") 'zxc-dev-ft-dired-mark-tags)))
 
 (provide 'zxc-dev-ft)
 

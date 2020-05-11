@@ -2,7 +2,6 @@
 
 ;; Version: 1.0.0
 ;; URL: https://github.com/zxcwindy/zxc-dev
-;; Package-Requires: ((emacs "26.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -57,7 +56,7 @@ Argument URI url."
 	    (kill-buffer buf)
 	    (setf zxc-dev-db-result (json-read-from-string (decode-coding-string data 'utf-8))))))
       (deferred:nextc it
-	(lambda (response)
+	(lambda (_response)
 	  (funcall zxc-dev-db-callback))))))
 
 ;;temp-func
