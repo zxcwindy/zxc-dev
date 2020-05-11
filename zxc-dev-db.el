@@ -74,7 +74,7 @@ Argument ZXC-DEV-DB-CALLBACK callback function."
 	    (kill-buffer buf)
 	    (setf zxc-dev-db-result (decode-coding-string data 'utf-8)))))
       (deferred:nextc it
-	(lambda (response)
+	(lambda (_response)
 	  (funcall zxc-dev-db-callback))))))
 
 (defun zxc-dev-db-create-column ()
